@@ -1,0 +1,7 @@
+playwright
+bs4
+dotenv
+kafka-python
+pyspark
+logging
+cassandra-driver

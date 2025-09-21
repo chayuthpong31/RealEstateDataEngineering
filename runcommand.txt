@@ -1,0 +1,8 @@
+Run with Docker
+docker exec -u root -it realestatedataengineering-spark-master-new-2-1 /bin/bash
+
+spark-submit \
+  --master spark://spark-master-new-2-1:7077 \
+  --conf spark.hadoop.fs.defaultFS=file:/// \
+  --conf spark.jars.ivy=/tmp/.ivy2 \
+  /opt/bitnami/spark/jobs/spark-consumer.py
