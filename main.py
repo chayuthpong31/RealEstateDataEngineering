@@ -122,7 +122,8 @@ def extract_property_details(input):
     return data
 
 
-async def scrape(playwright: Playwright, producer, url=BASE_URL):
+# async def scrape(playwright: Playwright, producer, url=BASE_URL):
+async def scrape(playwright: Playwright):
     if not AUTH:
         raise Exception('AUTH environment variable not set. Check your .env file.')
 
@@ -178,10 +179,10 @@ async def scrape(playwright: Playwright, producer, url=BASE_URL):
                 data.update(more_infomation)
                 print("Extracting Item #",idx)
 
-                # print(data)
-                print("Sending data to kafka")
-                producer.send("properties", value=json.dumps(data).encode('utf-8'))
-                print("Data sent to Kafka")
+                print(data)
+                # print("Sending data to kafka")
+                # producer.send("properties", value=json.dumps(data).encode('utf-8'))
+                # print("Data sent to Kafka")
                 # break
 
             except TimeoutError:
@@ -197,9 +198,10 @@ async def scrape(playwright: Playwright, producer, url=BASE_URL):
 
 
 async def main():
-    producer = KafkaProducer(bootstrap_servers=["kafka-broker:9092"], max_block_ms=10000)
+    # producer = KafkaProducer(bootstrap_servers=["kafka-broker:9092"], max_block_ms=10000)
     async with async_playwright() as playwright:
-        await scrape(playwright, producer)
+        await scrape(playwright)
+        # await scrape(playwright, producer)
 
 
 if __name__ == '__main__':
